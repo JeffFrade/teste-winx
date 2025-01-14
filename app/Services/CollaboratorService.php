@@ -41,7 +41,7 @@ class CollaboratorService
     {
         $collaborator = $this->collaboratorRepository->findFirst('id', $id);
 
-        if (empty($collaborator) || ($collaborator->id_account ?? '') != Auth::user()->id_account) {
+        if (empty($collaborator) || ($collaborator->id_company ?? '') != Auth::user()->id_company) {
             throw new CollaboratorNotFoundException('Colaborador Inexistente', 404);
         }
 

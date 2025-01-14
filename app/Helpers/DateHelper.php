@@ -21,4 +21,13 @@ class DateHelper
 
         return null;
     }
+
+    public static function convertTimestamp(?string $date)
+    {
+        if (!is_null($date)) {
+            return Carbon::parse($date)->format('d/m/Y H:i:s');
+        }
+
+        return null;
+    }
 }
