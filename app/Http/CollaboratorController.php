@@ -52,7 +52,16 @@ class CollaboratorController extends Controller
 
     public function update(Request $request, int $id)
     {
+        try {
+            $params = $this->toValidate($request, $id);
+            $this->collaboratorService->update($params, $id);
 
+            return redirect(route('home.collaborators.index'))
+                ->with('message', 'Colaborador atualizado com sucesso!');
+        } catch (CollaboratorNotFoundException $e) {
+            return redirect(route('home.collaborators.index'))
+                ->with('error', $e->getMessage());
+        }
     }
 
     public function status(int $id)

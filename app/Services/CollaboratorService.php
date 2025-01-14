@@ -41,6 +41,13 @@ class CollaboratorService
         return $collaborator;
     }
 
+    public function update(array $data, int $id)
+    {
+        $this->edit($id);
+
+        $this->collaboratorRepository->update($data, $id);
+    }
+
     public function status(int $id)
     {
         $collaborator = $this->edit($id);
