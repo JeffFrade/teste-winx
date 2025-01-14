@@ -30,7 +30,9 @@ class CollaboratorService
 
     public function store(array $data)
     {
-        $data['id_company'] = Auth::user()->id_company;
+        if (empty($data['id_company'] ?? '')) {
+            $data['id_company'] = Auth::user()->id_company;
+        }
 
         return $this->collaboratorRepository->create($data);
     }
@@ -83,7 +85,6 @@ class CollaboratorService
 
         $data = [
             'id_company' => Auth::user()->id_company,
-            'id_user' => Auth::user()->id,
             'id_batch' => $batch->id,
             'rows' => array_filter($rows)
         ];

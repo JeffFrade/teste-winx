@@ -52,7 +52,7 @@ class ProcessCsvJob implements ShouldQueue
             $errors[] = $this->validatePosition($row[3]);
 
             $errors = array_filter($errors);
-            
+
             $this->storeInfo(
                 $line,
                 $rowContent,
@@ -60,13 +60,19 @@ class ProcessCsvJob implements ShouldQueue
             );
 
             $line += 1;
+            
             if (count($errors) == 0) {
                 $admissionDate = DateHelper::parse($row[3], 'd/m/Y');
                 $admissionDate = $admissionDate->format('Y-m-d');
 
-                dump($row);
-
-                // TODO: Store or update collaborator
+                $this->collaboratorService->store([
+                    'id_company' => $this->data['id_company'],
+                    'name' => $row[0],
+                    'email' => $row[1],
+                    'position' => $row[2],
+                    'admission_date' => $admissionDate,
+                ]);
+                
                 continue;
             }
 
@@ -130,7 +136,7 @@ class ProcessCsvJob implements ShouldQueue
             'line' => $line,
             'line_content' => $lineContent,
             'status' => $status,
-            'obs' => $obs,
+            'obs' => trim($obs),
         ]);
     }
 }
