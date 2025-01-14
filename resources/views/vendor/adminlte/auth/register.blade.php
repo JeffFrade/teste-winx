@@ -17,6 +17,42 @@
     <form action="{{ $register_url }}" method="post">
         @csrf
 
+        <div class="input-group mb-3">
+            <input type="text" name="company_name" class="form-control @error('company_name') is-invalid @enderror"
+                   value="{{ old('company_name') }}" placeholder="{{ __('adminlte::adminlte.company_name') }}" autofocus>
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-building {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+
+            @error('company_name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" name="document" class="form-control cnpj-mask @error('document') is-invalid @enderror"
+                   value="{{ old('document') }}" placeholder="{{ __('adminlte::adminlte.document') }}" autofocus>
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+
+            @error('document')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
+        <hr/>
+
         {{-- Name field --}}
         <div class="input-group mb-3">
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
@@ -105,4 +141,11 @@
             {{ __('adminlte::adminlte.i_already_have_a_membership') }}
         </a>
     </p>
+@stop
+
+@section('js')
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+    <script type="text/javascript">
+        $('.cnpj-mask').mask('00.000.000/0000-00');
+    </script>
 @stop
