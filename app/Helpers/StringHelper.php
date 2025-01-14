@@ -14,4 +14,9 @@ class StringHelper
 
         return Hash::make($password);
     }
+
+    public static function replaceRegex(string $text, string $regex, string $replace)
+    {
+        return preg_replace($regex, $replace, $text);
+    }
 }

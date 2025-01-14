@@ -3,9 +3,10 @@
 namespace App\Http\Auth;
 
 use App\Core\Support\Controller;
+use App\Helpers\StringHelper;
 use App\Models\User;
+use App\Services\CompanyService;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -30,14 +31,17 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
+    private $companyService;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CompanyService $companyService)
     {
         $this->middleware('guest');
+        $this->companyService = $companyService;
     }
 
     /**
@@ -49,6 +53,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'company_name' => ['required', 'string', 'max:150'],
+            'document' => ['required', 'string', 'size:18', 'unique:companies'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -63,10 +69,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $company = $this->storeCompany($data);
+        
+        $user = User::create([
+            'id_company' => $company->id,
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => StringHelper::hashPassword($data['password']),
+        ]);
+
+        $this->givePermission($user);
+
+        return $user;
+    }
+
+    private function storeCompany(array $data)
+    {
+        return $this->companyService->store($data);
+    }
+
+    private function givePermission(User $user)
+    {
+        $user->givePermissionTo([
+            'admin'
         ]);
     }
 }
