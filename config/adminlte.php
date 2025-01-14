@@ -299,11 +299,6 @@ return [
     */
 
     'menu' => [
-        /*[
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],*/
         [
             'text' => 'home',
             'url' => 'home',
@@ -316,6 +311,27 @@ return [
             'icon' => 'fa fa-fw fa-users',
             'active' => ['/home/collaborators', '/home/collaborators*', '/home/collaborators?*']
         ],
+        [
+            'text' => 'batches',
+            'url' => 'home/batches',
+            'icon' => 'fa fa-fw fa-cogs',
+            'active' => ['/home/batches', '/home/batches*', '/home/batches?*'],
+            'can' => 'admin',
+        ],
+        [
+            'text' => 'users',
+            'url' => 'home/users',
+            'icon' => 'fa fa-fw fa-user',
+            'active' => ['/home/users', '/home/users*', '/home/users?*'],
+            'can' => 'admin',
+        ],
+        [
+            'text' => 'company',
+            'url' => 'home/company',
+            'icon' => 'fa fa-fw fa-building',
+            'active' => ['/home/company', '/home/company*', '/home/company?*'],
+            'can' => 'admin',
+        ]
     ],
 
     /*
