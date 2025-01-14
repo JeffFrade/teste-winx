@@ -16,7 +16,6 @@ class CompanyService
 
     public function store(array $data)
     {
-        dump($data);
         $data['document'] = StringHelper::replaceRegex($data['document'], '/\D/i', '');
 
         return $this->companyRepository->create($data);

@@ -1,0 +1,27 @@
+.overlay-hidden {
+    display: none !important;
+}
+
+.required {
+    color: #FF0000;
+}
+
+.label {
+    font-size: 15px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.overflow-y {
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
