@@ -51,13 +51,24 @@ class CollaboratorController extends Controller
 
     }
 
-    public function delete(int $id)
+    public function status(int $id)
     {
+        try {
+            $message = $this->collaboratorService->status($id);
 
+            return $this->sendJsonSuccessResponse($message);
+        } catch (CollaboratorNotFoundException $e) {
+            return $this->sendJsonErrorResponse($e);
+        }
     }
 
     public function batch(Request $request)
     {
         
+    }
+
+    protected function tovalidate()
+    {
+
     }
 }

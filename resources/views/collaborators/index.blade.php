@@ -54,7 +54,11 @@
                                             <a href="{{ route('home.collaborators.edit', ['id' => $collaborator->id]) }}" class="btn btn-default btn-xs" title="Editar"><i class="fa fa-fw fa-edit"></i></a>
                                             @can('admin')
                                                 &nbsp;
-                                                <a href="#" class="btn btn-danger btn-xs btn-overlay" data-id="{{ $collaborator->id }}" title="Excluir" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-fw fa-trash"></i></a>
+                                                @if ($collaborator->active)
+                                                    <a href="#" class="btn btn-danger btn-xs btn-overlay btn-status" data-id="{{ $collaborator->id }}" title="Inativar"><i class="fa fa-fw fa-ban"></i></a>
+                                                @else
+                                                    <a href="#" class="btn btn-success btn-xs btn-overlay btn-status" data-id="{{ $collaborator->id }}" title="Ativar"><i class="fa fa-fw fa-check"></i></a>
+                                                @endif
                                             @endcan
                                         </td>
                                     </tr>
@@ -74,15 +78,43 @@
                     @include('util.overlay')
                 </div>
             </form>
-        </div>
-
-        @include('util.delete-modal')
+</div>
     </div>
 @stop
 
 @section('js')
-    <script src="{{ asset('js/delete-modal.js') }}"></script>
     <script type="text/javascript">
-        deleteModal('collaborators/delete/');
+        $('.btn-status').on('click', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            method: 'PUT',
+            url: 'collaborators/status/' + $(this).data('id'),
+            timeout: 0,
+            success: function (response) {
+                $.notify({message: '<i class="fa fa-fw fa-check"></i>&nbsp; ' + response.message}, {type: 'success'});
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+            },
+            error: function (err) {
+                let error = err.responseJSON.error;
+
+                if (error == undefined) {
+                    error = err.responseJSON;
+                }
+
+                $.notify({message: '<i class="fa fa-fw fa-times"></i>&nbsp; ' + error.message}, {type: 'danger'});
+                console.error(error);
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+            }
+        });
+        })
     </script>
 @stop

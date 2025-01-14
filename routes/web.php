@@ -21,7 +21,7 @@ Route::group(['prefix' => 'home', 'middleware' => 'auth'], function () {
         Route::post('/store', [CollaboratorController::class, 'store'])->name('home.collaborators.store');
         Route::get('/edit/{id}', [CollaboratorController::class, 'edit'])->name('home.collaborators.edit');
         Route::put('/update/{id}', [CollaboratorController::class, 'update'])->name('home.collaborators.update');
-        Route::delete('/delete/{id}', [CollaboratorController::class, 'delete'])->middleware(RedirectWithoutPermission::class)->name('home.collaborators.delete');
+        Route::put('/status/{id}', [CollaboratorController::class, 'status'])->middleware(RedirectWithoutPermission::class)->name('home.collaborators.status');
         Route::post('/batch', [CollaboratorController::class, 'batch'])->middleware(RedirectWithoutPermission::class)->name('home.collaborators.batch');
     });
 });

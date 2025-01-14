@@ -33,4 +33,22 @@ class CollaboratorService
 
         return $collaborator;
     }
+
+    public function status(int $id)
+    {
+        $collaborator = $this->edit($id);
+        $message = 'Colaborador inativado com sucesso!';
+        $active = 0;
+
+        if (!$collaborator->active) {
+            $message = 'Colaborador ativado com sucesso!';
+            $active = 1;
+        }
+
+        $this->collaboratorRepository->update([
+            'active' => $active
+        ], $id);
+        
+        return $message;
+    }
 }
