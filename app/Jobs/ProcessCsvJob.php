@@ -9,12 +9,14 @@ class ProcessCsvJob implements ShouldQueue
 {
     use Queueable;
 
+    private $data;
+
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(array $data)
     {
-        //
+        $this->data = $data;
     }
 
     /**

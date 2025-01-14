@@ -65,4 +65,10 @@ class CollaboratorService
         
         return $message;
     }
+
+    public function batch(array $data)
+    {
+        $data['id_account'] = Auth::user()->id_account;
+        $data['id_user'] = Auth::user()->id;
+    }
 }

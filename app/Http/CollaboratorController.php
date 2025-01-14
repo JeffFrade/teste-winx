@@ -77,7 +77,10 @@ class CollaboratorController extends Controller
 
     public function batch(Request $request)
     {
-        
+        $params = $this->toValidateBatch($request);
+
+        return redirect(route('home.collaborators.index'))
+            ->with('message', 'Arquivo carregado com sucesso! (Será notificado via e-mail com o término da importação).');
     }
 
     protected function toValidate(Request $request, ?int $id = null)
@@ -87,6 +90,15 @@ class CollaboratorController extends Controller
             'email' => 'required|max:150|unique:collaborators,email,' . $id,
             'position' => 'required|max:70',
             'admission_date' => 'required|date',
+        ];
+
+        return $this->validate($request, $toValidateArr);
+    }
+
+    protected function toValidateBatch(Request $request)
+    {
+        $toValidateArr = [
+            'csv' => 'file|mimes:csv,txt'
         ];
 
         return $this->validate($request, $toValidateArr);

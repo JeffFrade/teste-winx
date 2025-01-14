@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+    @include('util.errors')
     <div class="row">
         <div class="col-12">
             <form action="{{ route('home.collaborators.index') }}" method="GET">
@@ -21,8 +22,10 @@
 
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-warning btn-overlay"><i class="fa fa-search"></i>&nbsp; Filtrar</button>
-                                &nbsp;
-                                <a href="#" class="btn btn-secondary"><i class="fa fa-file-excel"></i>&nbsp; Cadastrar Em Lote</a>
+                                @can('admin')
+                                    &nbsp;
+                                    <a href="#" class="btn btn-secondary btn-overlay" data-toggle="modal" data-target="#batchModal"><i class="fa fa-file-excel"></i>&nbsp; Cadastrar Em Lote</a>
+                                @endcan
                                 &nbsp;
                                 <a href="{{ route('home.collaborators.create') }}" class="btn btn-default text-dark."><i class="fa fa-plus"></i>&nbsp; Cadastrar Colaborador</a>
                             </div>
@@ -74,12 +77,13 @@
                     <div class="card-footer">
                         {{ \App\Helpers\PaginateHelper::paginateWithParams($collaborators, $params) }}
                     </div>
-
                     @include('util.overlay')
                 </div>
             </form>
-</div>
+        </div>
     </div>
+
+    @include('collaborators.batch-modal')
 @stop
 
 @section('js')
@@ -88,33 +92,37 @@
             e.preventDefault();
 
             $.ajax({
-            contentType: 'application/x-www-form-urlencoded',
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-            },
-            method: 'PUT',
-            url: 'collaborators/status/' + $(this).data('id'),
-            timeout: 0,
-            success: function (response) {
-                $.notify({message: '<i class="fa fa-fw fa-check"></i>&nbsp; ' + response.message}, {type: 'success'});
-                setTimeout(function () {
-                    location.reload();
-                }, 2000);
-            },
-            error: function (err) {
-                let error = err.responseJSON.error;
+                contentType: 'application/x-www-form-urlencoded',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                },
+                method: 'PUT',
+                url: 'collaborators/status/' + $(this).data('id'),
+                timeout: 0,
+                success: function (response) {
+                    $.notify({message: '<i class="fa fa-fw fa-check"></i>&nbsp; ' + response.message}, {type: 'success'});
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
+                },
+                error: function (err) {
+                    let error = err.responseJSON.error;
 
-                if (error == undefined) {
-                    error = err.responseJSON;
+                    if (error == undefined) {
+                        error = err.responseJSON;
+                    }
+
+                    $.notify({message: '<i class="fa fa-fw fa-times"></i>&nbsp; ' + error.message}, {type: 'danger'});
+                    console.error(error);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 2000);
                 }
-
-                $.notify({message: '<i class="fa fa-fw fa-times"></i>&nbsp; ' + error.message}, {type: 'danger'});
-                console.error(error);
-                setTimeout(function () {
-                    location.reload();
-                }, 2000);
-            }
+            });
         });
-        })
+
+        $('#batchModal').on('hide.bs.modal', function (event) {
+            $('.overlay').addClass('overlay-hidden');
+        });
     </script>
 @stop
