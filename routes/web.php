@@ -6,6 +6,7 @@ use App\Http\BatchInfoController;
 use App\Http\CollaboratorController;
 use App\Http\CompanyController;
 use App\Http\HomeController;
+use App\Http\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -40,5 +41,18 @@ Route::group(['prefix' => 'home', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => 'companies', 'middleware' => RedirectWithoutPermission::class], function () {
         Route::get('/', [CompanyController::class, 'edit'])->name('home.companies.edit');
         Route::put('/update', [CompanyController::class, 'update'])->name('home.companies.update');
+    });
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::group(['middleware' => RedirectWithoutPermission::class], function () {
+            Route::get('/', [UserController::class, 'index'])->name('home.users.index');
+            Route::get('/create', [UserController::class, 'create'])->name('home.users.create');
+            Route::post('/store', [UserController::class, 'store'])->name('home.users.store');
+            Route::get('/edit/{id}', [UserController::class, 'edit'])->name('home.users.edit');
+            Route::put('/update/{id}', [UserController::class, 'update'])->name('home.users.update');
+            Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('home.users.delete');
+        });
+        
+        Route::get('/profile', [UserController::class, 'profile'])->name('home.users.profile');
     });
 });
