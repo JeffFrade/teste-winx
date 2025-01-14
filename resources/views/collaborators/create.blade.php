@@ -1,19 +1,18 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar Colaborador')
+@section('title', 'Cadastrar Colaborador')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Editar Colaborador {{ $collaborator->nome }}</h1>
+    <h1 class="m-0 text-dark">Cadastrar Colaborador</h1>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-12">
-            <form action="{{ route('home.collaborators.update', ['id' => $collaborator->id]) }}" method="POST">
-                @method('PUT')
+            <form action="{{ route('home.collaborators.store') }}" method="POST">
                 <div class="card card-warning card-outline">
                     <div class="card-header bg-transparent">
-                        <h3 class="card-title text-dark">Atualizar Colaborador</h3>
+                        <h3 class="card-title text-dark">Cadastrar Colaborador</h3>
                     </div>
 
                     <div class="card-body">

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Core\Support\Controller;
+use App\Exceptions\CollaboratorNotFoundException;
 use App\Services\CollaboratorService;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class CollaboratorController extends Controller
 
     public function create()
     {
-
+        return view('collaborators.create');
     }
 
     public function store()
@@ -35,7 +36,14 @@ class CollaboratorController extends Controller
 
     public function edit(int $id)
     {
+        try {
+            $collaborator = $this->collaboratorService->edit($id);
 
+            return view('collaborators.edit', compact('collaborator'));
+        } catch (CollaboratorNotFoundException $e) {
+            return redirect(route('home.collaborators.index'))
+                ->with('error', $e->getMessage());
+        }
     }
 
     public function update(Request $request, int $id)

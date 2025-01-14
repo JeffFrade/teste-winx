@@ -24,7 +24,7 @@
                                 &nbsp;
                                 <a href="#" class="btn btn-secondary"><i class="fa fa-file-excel"></i>&nbsp; Cadastrar Em Lote</a>
                                 &nbsp;
-                                <a href="#" class="btn btn-default text-dark"><i class="fa fa-plus"></i>&nbsp; Cadastrar Colaborador</a>
+                                <a href="{{ route('home.collaborators.create') }}" class="btn btn-default text-dark."><i class="fa fa-plus"></i>&nbsp; Cadastrar Colaborador</a>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                                     <th>Nome</th>
                                     <th>E-mail</th>
                                     <th>Cargo</th>
-                                    <th>Admissão</th>
+                                    <th>Data de Admissão</th>
                                     <th>Situação</th>
                                     <th>Ações</th>
                                 </tr>
@@ -52,8 +52,10 @@
                                         <td>{!! \App\TypeLabels\ActiveValue::label($collaborator->active) !!}</td>
                                         <td style="width: 1%" nowrap="nowrap">
                                             <a href="{{ route('home.collaborators.edit', ['id' => $collaborator->id]) }}" class="btn btn-default btn-xs" title="Editar"><i class="fa fa-fw fa-edit"></i></a>
-                                            &nbsp;
-                                            <a href="#" class="btn btn-danger btn-xs btn-overlay" data-id="{{ $collaborator->id }}" title="Excluir" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-fw fa-trash"></i></a>
+                                            @can('admin')
+                                                &nbsp;
+                                                <a href="#" class="btn btn-danger btn-xs btn-overlay" data-id="{{ $collaborator->id }}" title="Excluir" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-fw fa-trash"></i></a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty
@@ -81,6 +83,6 @@
 @section('js')
     <script src="{{ asset('js/delete-modal.js') }}"></script>
     <script type="text/javascript">
-        deleteModal('accounts/delete/');
+        deleteModal('collaborators/delete/');
     </script>
 @stop
