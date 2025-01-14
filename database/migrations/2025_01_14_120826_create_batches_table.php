@@ -18,7 +18,6 @@ return new class extends Migration
             $table->char('status', 1)
                 ->default('C')
                 ->comment('C => Created | R => Running | F => Finished (100% Ok) | W => Finished With Errors (Warning) | X => Error');
-            $table->string('filename', 100);
             $table->timestamps();
             $table->softDeletes();
 

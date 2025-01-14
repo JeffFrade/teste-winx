@@ -12,4 +12,9 @@ class BatchInfoService
     {
         $this->batchInfoRepository = new BatchInfoRepository();
     }
+
+    public function store(array $data)
+    {
+        return $this->batchInfoRepository->create($data);
+    }
 }

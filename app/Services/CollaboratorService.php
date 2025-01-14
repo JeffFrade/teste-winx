@@ -3,16 +3,21 @@
 namespace App\Services;
 
 use App\Exceptions\CollaboratorNotFoundException;
+use App\Helpers\IniHelper;
+use App\Jobs\ProcessCsvJob;
 use App\Repositories\CollaboratorRepository;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 
 class CollaboratorService
 {
     private $collaboratorRepository;
+    private $batchService;
 
     public function __construct()
     {
         $this->collaboratorRepository = new CollaboratorRepository();
+        $this->batchService = new BatchService();
     }
 
     public function index(array $data)
@@ -66,9 +71,28 @@ class CollaboratorService
         return $message;
     }
 
-    public function batch(array $data)
+    public function batch(UploadedFile $file)
     {
-        $data['id_account'] = Auth::user()->id_account;
-        $data['id_user'] = Auth::user()->id;
+        IniHelper::setMemoryIniVars();
+
+        $batch = $this->batchService->store();
+
+        $rows = file_get_contents($file->getRealPath());
+        $rows = explode("\n", $rows);
+        array_shift($rows);
+
+        $data = [
+            'id_company' => Auth::user()->id_company,
+            'id_user' => Auth::user()->id,
+            'id_batch' => $batch->id,
+            'rows' => array_filter($rows)
+        ];
+
+        ProcessCsvJob::dispatch($data);
+    }
+
+    public function findByEmail(string $email)
+    {
+        return $this->collaboratorRepository->findFirst('email', $email);
     }
 }

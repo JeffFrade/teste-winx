@@ -77,8 +77,12 @@ class CollaboratorController extends Controller
 
     public function batch(Request $request)
     {
-        $params = $this->toValidateBatch($request);
+        $this->toValidateBatch($request);
+        $file = request()->file('csv');
+        
+        $this->collaboratorService->batch($file);
 
+        dd('Ok');
         return redirect(route('home.collaborators.index'))
             ->with('message', 'Arquivo carregado com sucesso! (Será notificado via e-mail com o término da importação).');
     }

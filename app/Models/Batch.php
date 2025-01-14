@@ -12,7 +12,6 @@ class Batch extends Model
     protected $fillable = [
         'id_company',
         'id_user',
-        'status',
-        'filename'
+        'status'
     ];
 }
