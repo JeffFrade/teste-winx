@@ -4,6 +4,7 @@ use App\Core\Middleware\RedirectWithoutPermission;
 use App\Http\BatchController;
 use App\Http\BatchInfoController;
 use App\Http\CollaboratorController;
+use App\Http\CompanyController;
 use App\Http\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,5 +35,10 @@ Route::group(['prefix' => 'home', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => 'batch-infos', 'middleware' => RedirectWithoutPermission::class], function () {
         Route::get('/show/{id}', [BatchInfoController::class, 'show'])->name('home.batch_infos.show');
         Route::get('/obs/{id}', [BatchInfoController::class, 'obs'])->name('home.batch_infos.obs');
+    });
+
+    Route::group(['prefix' => 'companies', 'middleware' => RedirectWithoutPermission::class], function () {
+        Route::get('/', [CompanyController::class, 'edit'])->name('home.companies.edit');
+        Route::put('/update', [CompanyController::class, 'update'])->name('home.companies.update');
     });
 });

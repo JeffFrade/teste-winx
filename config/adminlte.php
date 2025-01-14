@@ -327,9 +327,9 @@ return [
         ],
         [
             'text' => 'company',
-            'url' => 'home/company',
+            'url' => 'home/companies',
             'icon' => 'fa fa-fw fa-building',
-            'active' => ['/home/company', '/home/company*', '/home/company?*'],
+            'active' => ['/home/companies', '/home/companies*', '/home/companies?*'],
             'can' => 'admin',
         ]
     ],
