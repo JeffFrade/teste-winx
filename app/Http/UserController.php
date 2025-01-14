@@ -28,4 +28,36 @@ class UserController extends Controller
 
         return view('users.index', compact('params', 'users'));
     }
+
+    public function create()
+    {
+        $permissions = $this->permissionService->getPermissions();
+
+        return view('users.create', compact('permissions'));
+    }
+
+    public function store(Request $request)
+    {
+        $params = $this->toValidate($request);
+
+        $user = $this->userService->store($params);
+
+        return redirect(route('home.users.index'))
+            ->with('message', 'Usuário cadastrado com sucesso!');
+    }
+
+    protected function toValidate(Request $request, bool $isUpdate = false, ?int $id = null)
+    {
+        $passwordField = ($isUpdate ? 'nullable' : 'required');
+        $permissionField = ($isUpdate ? 'nullable' : 'required');
+
+        $toValidateArr = [
+            'name' => 'required|max:255',
+            'email' => 'required|max:255|unique:users,email,' . $id,
+            'permission' => $permissionField . '|max:255',
+            'password' => $passwordField . '|min:8',
+        ];
+
+        return $this->validate($request, $toValidateArr);
+    }
 }
