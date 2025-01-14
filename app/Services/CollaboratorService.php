@@ -23,6 +23,13 @@ class CollaboratorService
         return $this->collaboratorRepository->index($idCompany, $search);
     }
 
+    public function store(array $data)
+    {
+        $data['id_company'] = Auth::user()->id_company;
+
+        return $this->collaboratorRepository->create($data);
+    }
+
     public function edit(int $id)
     {
         $collaborator = $this->collaboratorRepository->findFirst('id', $id);

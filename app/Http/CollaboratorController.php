@@ -29,9 +29,13 @@ class CollaboratorController extends Controller
         return view('collaborators.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $params = $this->toValidate($request);
+        $this->collaboratorService->store($params);
 
+        return redirect(route('home.collaborators.index'))
+            ->with('message', 'Colaborador cadastrado com sucesso!');
     }
 
     public function edit(int $id)
@@ -67,8 +71,15 @@ class CollaboratorController extends Controller
         
     }
 
-    protected function tovalidate()
+    protected function toValidate(Request $request, ?int $id = null)
     {
+        $toValidateArr = [
+            'name' => 'required|max:75',
+            'email' => 'required|max:150|unique:collaborators,email,' . $id,
+            'position' => 'required|max:70',
+            'admission_date' => 'required|date',
+        ];
 
+        return $this->validate($request, $toValidateArr);
     }
 }

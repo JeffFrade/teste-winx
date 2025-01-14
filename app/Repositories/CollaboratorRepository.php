@@ -22,6 +22,6 @@ class CollaboratorRepository extends AbstractRepository
                 ->orWhere('position', 'LIKE', '%' . $search . '%');
         }
 
-        return $model->simplePaginate();
+        return $model->orderBy('name')->simplePaginate();
     }
 }
