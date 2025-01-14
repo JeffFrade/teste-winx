@@ -31,7 +31,7 @@
                                     <td>{{ \App\Helpers\DateHelper::convertTimestamp($batch->created_at) }}</td>
                                     <td>{{ \App\Helpers\DateHelper::convertTimestamp($batch->updated_at) }}</td>
                                     <td style="width: 1%" nowrap="nowrap">
-                                        <a href="{{ route('home.collaborators.edit', ['id' => $batch->id]) }}" class="btn btn-warning btn-xs" title="Ver Informações"><i class="fa fa-fw fa-eye"></i></a>
+                                        <a href="{{ route('home.batch_infos.show', ['id' => $batch->id]) }}" class="btn btn-warning btn-xs" title="Ver Informações"><i class="fa fa-fw fa-eye"></i></a>
                                     </td>
                                 </tr>
                             @empty

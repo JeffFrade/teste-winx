@@ -315,7 +315,7 @@ return [
             'text' => 'batches',
             'url' => 'home/batches',
             'icon' => 'fa fa-fw fa-cogs',
-            'active' => ['/home/batches', '/home/batches*', '/home/batches?*'],
+            'active' => ['/home/batch*', '/home/batch*', '/home/batches?*', '/home/batch-infos?*'],
             'can' => 'admin',
         ],
         [

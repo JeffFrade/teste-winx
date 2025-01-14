@@ -17,4 +17,10 @@ class BatchInfoService
     {
         return $this->batchInfoRepository->create($data);
     }
+
+    public function show(int $id, array $data)
+    {
+        $search = $data['search'] ?? '';
+        return $this->batchInfoRepository->show($id, $search);
+    }
 }
