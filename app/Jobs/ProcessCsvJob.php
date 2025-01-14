@@ -9,6 +9,7 @@ use App\Services\BatchService;
 use App\Services\CollaboratorService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 class ProcessCsvJob implements ShouldQueue
 {
@@ -37,49 +38,54 @@ class ProcessCsvJob implements ShouldQueue
     {
         IniHelper::setMemoryIniVars();
 
-        $this->batchService->changeStatus($this->data['id_batch'], 'R');
+        try {
+            $this->batchService->changeStatus($this->data['id_batch'], 'R');
 
-        $finalStatus = 'F';
-        $line = 2;
+            $finalStatus = 'F';
+            $line = 2;
 
-        foreach ($this->data['rows'] as $rowContent) {
-            $row = explode(';', $rowContent);
-            $errors = [];
+            foreach ($this->data['rows'] as $rowContent) {
+                $row = explode(';', $rowContent);
+                $errors = [];
 
-            $errors[] = $this->validateName($row[0]);
-            $errors[] = $this->validateEmail($row[1]);
-            $errors[] = $this->validatePosition($row[2]);
-            $errors[] = $this->validatePosition($row[3]);
+                $errors[] = $this->validateName($row[0]);
+                $errors[] = $this->validateEmail($row[1]);
+                $errors[] = $this->validatePosition($row[2]);
+                $errors[] = $this->validatePosition($row[3]);
 
-            $errors = array_filter($errors);
+                $errors = array_filter($errors);
 
-            $this->storeInfo(
-                $line,
-                $rowContent,
-                $errors
-            );
+                $this->storeInfo(
+                    $line,
+                    $rowContent,
+                    $errors
+                );
 
-            $line += 1;
-            
-            if (count($errors) == 0) {
-                $admissionDate = DateHelper::parse($row[3], 'd/m/Y');
-                $admissionDate = $admissionDate->format('Y-m-d');
-
-                $this->collaboratorService->store([
-                    'id_company' => $this->data['id_company'],
-                    'name' => $row[0],
-                    'email' => $row[1],
-                    'position' => $row[2],
-                    'admission_date' => $admissionDate,
-                ]);
+                $line += 1;
                 
-                continue;
+                if (count($errors) == 0) {
+                    $admissionDate = DateHelper::parse($row[3], 'd/m/Y');
+                    $admissionDate = $admissionDate->format('Y-m-d');
+
+                    $this->collaboratorService->store([
+                        'id_company' => $this->data['id_company'],
+                        'name' => $row[0],
+                        'email' => $row[1],
+                        'position' => $row[2],
+                        'admission_date' => $admissionDate,
+                    ]);
+                    
+                    continue;
+                }
+
+                $finalStatus = 'W';
             }
 
-            $finalStatus = 'W';
+            $this->batchService->changeStatus($this->data['id_batch'], $finalStatus);
+        } catch (\Exception $e) {
+            Log::error('Error: ' . json_encode($e));
+            $this->batchService->changeStatus($this->data['id_batch'], 'X');
         }
-
-        $this->batchService->changeStatus($this->data['id_batch'], $finalStatus);
     }
 
     private function validateName(string $name)

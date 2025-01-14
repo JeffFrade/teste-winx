@@ -14,4 +14,14 @@ class Batch extends Model
         'id_user',
         'status'
     ];
+
+    public function company()
+    {
+        return $this->hasOne(Batch::class, 'id', 'id_company');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'id_user');
+    }
 }

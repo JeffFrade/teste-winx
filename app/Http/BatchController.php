@@ -16,6 +16,8 @@ class BatchController extends Controller
 
     public function index()
     {
-        return view('batches.index');
+        $batches = $this->batchService->index();
+
+        return view('batches.index', compact('batches'));
     }
 }

@@ -14,6 +14,13 @@ class BatchService
         $this->batchRepository = new BatchRepository();
     }
 
+    public function index()
+    {
+        $idCompany = Auth::user()->id_company;
+
+        return $this->batchRepository->index($idCompany);
+    }
+
     public function store()
     {
         return $this->batchRepository->create([
