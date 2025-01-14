@@ -81,8 +81,7 @@ class CollaboratorController extends Controller
         $file = request()->file('csv');
         
         $this->collaboratorService->batch($file);
-
-        dd('Ok');
+        
         return redirect(route('home.collaborators.index'))
             ->with('message', 'Arquivo carregado com sucesso! (Será notificado via e-mail com o término da importação).');
     }
