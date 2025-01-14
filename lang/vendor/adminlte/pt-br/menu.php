@@ -8,6 +8,7 @@ return [
     'account_settings' => 'Configurações da Conta',
     'profile' => 'Perfil',
     'home' => 'Home',
+    'collaborators' => 'Colaboradores',
     'change_password' => 'Mudar Senha',
     'multilevel' => 'Multinível',
     'level_one' => 'Nível 1',

@@ -144,7 +144,6 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script type="text/javascript">
         $('.cnpj-mask').mask('00.000.000/0000-00');
     </script>

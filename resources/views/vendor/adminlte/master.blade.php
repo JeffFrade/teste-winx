@@ -62,6 +62,9 @@
         @endif
     @endif
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-notify.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+
     {{-- Custom Stylesheets (post AdminLTE) --}}
     @yield('adminlte_css')
 
@@ -127,6 +130,11 @@
             <livewire:scripts />
         @endif
     @endif
+
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')

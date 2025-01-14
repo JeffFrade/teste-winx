@@ -32,6 +32,8 @@
             @include('adminlte::partials.sidebar.left-sidebar')
         @endif
 
+        @include('util.success')
+        @include('util.exception')
         {{-- Content Wrapper --}}
         @empty($iFrameEnabled)
             @include('adminlte::partials.cwrapper.cwrapper-default')
