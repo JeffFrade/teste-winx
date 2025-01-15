@@ -31,4 +31,9 @@ class CompanyService
     {
         return $this->companyRepository->findFirst('id', Auth::user()->id_company);
     }
+
+    public function delete(int $id)
+    {
+        $this->companyRepository->delete($id);
+    }
 }

@@ -23,4 +23,9 @@ class BatchInfoService
         $search = $data['search'] ?? '';
         return $this->batchInfoRepository->show($id, $search);
     }
+
+    public function deleteByIdBatch(int $idBatch)
+    {
+        $this->batchInfoRepository->customDelete('id_batch', $idBatch);
+    }
 }

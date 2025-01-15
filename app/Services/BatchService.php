@@ -48,4 +48,9 @@ class BatchService
 
         return $batch;
     }
+
+    public function getBatchesByIdCompany(int $id)
+    {
+        return $this->batchRepository->findBy('id_company', $id);
+    }
 }
