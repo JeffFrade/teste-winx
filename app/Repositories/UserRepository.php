@@ -11,4 +11,17 @@ class UserRepository extends AbstractRepository
     {
         $this->model = new User();
     }
+
+    public function index(string $search, int $idCompany)
+    {
+        $model = $this->model->where('id_company', $idCompany);
+
+        if (!empty($search)) {
+            $model = $model->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('email', 'LIKE', '%' . $search . '%');
+        }
+
+        return $model->orderBy('name')
+            ->simplePaginate();
+    }
 }

@@ -23,7 +23,7 @@ class User extends Authenticatable
         'id_company',
         'name',
         'email',
-        'password',
+        'password'
     ];
 
     /**
@@ -47,5 +47,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getPermissionAttribute()
+    {
+        return $this->getAllPermissions();
     }
 }
