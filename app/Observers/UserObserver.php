@@ -11,8 +11,8 @@ class UserObserver
 {
     public function created(User $user)
     {
-        $client = app(ClientRepository::class)->create($user->id, 'J3M', env('APP_URL'), 'users', 1, 1);
-        $this->addClient($user->id, $client->id, $client->secret);
+        $client = app(ClientRepository::class)->createPasswordGrantClient($user->id, 'J3M', env('APP_URL'),'users');
+        $this->addClient($user->id, $client->id, $client->plainSecret);
     }
 
     public function deleting(User $user)

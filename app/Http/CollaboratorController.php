@@ -98,6 +98,29 @@ class CollaboratorController extends Controller
         return $this->validate($request, $toValidateArr);
     }
 
+    public function listAll(Request $request)
+    {
+        try {
+            $params = $request->all();
+            $collaborators = $this->collaboratorService->index($params, true);
+
+            return $this->sendJsonSuccessResponse('', $collaborators);
+        } catch (CollaboratorNotFoundException $e) {
+            return $this->sendJsonErrorResponse($e);
+        }
+    }
+
+    public function listOne(int $id)
+    {
+        try {
+            $collaborator = $this->collaboratorService->edit($id);
+
+            return $this->sendJsonSuccessResponse('', $collaborator);
+        } catch (CollaboratorNotFoundException $e) {
+            return $this->sendJsonErrorResponse($e);
+        }
+    }
+
     protected function toValidateBatch(Request $request)
     {
         $toValidateArr = [
