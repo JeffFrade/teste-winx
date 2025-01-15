@@ -6,6 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix' => 'collaborators'], function () {
-    Route::get('/', [CollaboratorController::class, 'findAll'])->name('api.collaborators.all');
-    Route::get('/{id}', [CollaboratorController::class, 'findOne'])->name('api.collaborators.one');
+    Route::get('/', [CollaboratorController::class, 'listAll'])->name('api.collaborators.all');
+    Route::get('/{id}', [CollaboratorController::class, 'listOne'])->name('api.collaborators.one');
 });
