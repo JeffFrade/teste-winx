@@ -14,8 +14,7 @@ class UserRepository extends AbstractRepository
 
     public function index(string $search, int $idCompany)
     {
-        $model = $this->model->where('id_company', $idCompany)
-            ->where('active', 1);
+        $model = $this->model->where('id_company', $idCompany);
 
         if (!empty($search)) {
             $model = $model->where('name', 'LIKE', '%' . $search . '%')

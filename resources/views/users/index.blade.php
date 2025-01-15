@@ -35,7 +35,6 @@
                                     <th>Nome</th>
                                     <th>E-mail</th>
                                     <th>Perfil</th>
-                                    <th>Status</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -46,16 +45,15 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ __('profiles.' . $user->permission[0]->name) }}</td>
-                                        <td>{!! \App\TypeLabels\ActiveValue::label($user->active) !!}</td>
                                         <td style="width: 1%" nowrap="nowrap">
                                             <a href="{{ route('home.users.edit', ['id' => $user->id]) }}" class="btn btn-default btn-xs" title="Editar"><i class="fa fa-fw fa-edit"></i></a>
                                             &nbsp;
-                                            <a href="#" class="btn btn-danger btn-xs btn-overlay {{ ($user->id == \Illuminate\Support\Facades\Auth::user()->id) ? 'disabled' : '' }}" data-id="{{ $user->id }}" title="Excluir" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-fw fa-ban"></i></a>
+                                            <a href="#" class="btn btn-danger btn-xs btn-overlay {{ ($user->id == \Illuminate\Support\Facades\Auth::user()->id) ? 'disabled' : '' }}" data-id="{{ $user->id }}" title="Excluir" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-fw fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6">Não há dados</td>
+                                        <td colspan="4">Não há dados</td>
                                     </tr>
                                 @endforelse
                             </tbody>

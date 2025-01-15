@@ -84,6 +84,17 @@ class UserController extends Controller
         }
     }
 
+    public function delete(int $id)
+    {
+        try {
+            $this->userService->delete($id);
+
+            return $this->sendJsonSuccessResponse('Usuário excluído com sucesso!');
+        } catch (UserNotFoundException $e) {
+            return $this->sendJsonErrorResponse($e);
+        }
+    }
+
     protected function toValidate(Request $request, bool $isUpdate = false, ?int $id = null)
     {
         $passwordField = ($isUpdate ? 'nullable' : 'required');

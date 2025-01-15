@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\UserDeleteYourselfException;
 use App\Exceptions\UserNotFoundException;
 use App\Helpers\StringHelper;
 use App\Repositories\UserRepository;
@@ -58,5 +59,16 @@ class UserService
         }
 
         $this->userRepository->update(array_filter($data), $id);
+    }
+
+    public function delete(int $id)
+    {
+        $user = $this->edit($id);
+
+        if ($user->id == Auth::user()->id) {
+            throw new UserDeleteYourselfException('Não é possível excluir a si mesmo. Solicite a outro usuário com perfil de administrador para efetuar essa operação.', 400);
+        }
+
+        $this->userRepository->delete($id);
     }
 }
