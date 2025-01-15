@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Collaborator;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,22 +10,15 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CollaboratorStore
+class FinishImport
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    private $collaborator;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Collaborator $collaborator)
+    public function __construct()
     {
-        $this->collaborator = $collaborator;
-    }
-
-    public function getCollaborator()
-    {
-        return $this->collaborator;
+        //
     }
 }

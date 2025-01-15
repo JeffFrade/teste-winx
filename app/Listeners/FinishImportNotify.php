@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\CollaboratorStore;
+use App\Events\FinishImport;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
-class CollaboratorStoreNotify implements ShouldQueue
+class FinishImportNotify implements ShouldQueue
 {
     use InteractsWithQueue;
 
@@ -22,8 +22,8 @@ class CollaboratorStoreNotify implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(CollaboratorStore $event): void
+    public function handle(FinishImport $event): void
     {
-        Log::info('Colaborador cadastrado: ' . json_encode($event->getCollaborator()));
+        Log::info('Finalizada a importação');
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Events\CollaboratorError;
+use App\Events\CollaboratorStore;
+use App\Events\FinishImport;
 use App\Helpers\DateHelper;
 use App\Helpers\IniHelper;
 use App\Services\BatchInfoService;
@@ -67,21 +70,27 @@ class ProcessCsvJob implements ShouldQueue
                     $admissionDate = DateHelper::parse($row[3], 'd/m/Y');
                     $admissionDate = $admissionDate->format('Y-m-d');
 
-                    $this->collaboratorService->store([
+                    $collaborator = $this->collaboratorService->store([
                         'id_company' => $this->data['id_company'],
                         'name' => $row[0],
                         'email' => $row[1],
                         'position' => $row[2],
                         'admission_date' => $admissionDate,
                     ]);
+
+                    event(new CollaboratorStore($collaborator));
                     
                     continue;
                 }
+
+                event(new CollaboratorError($errors));
 
                 $finalStatus = 'W';
             }
 
             $this->batchService->changeStatus($this->data['id_batch'], $finalStatus);
+
+            event(new FinishImport());
         } catch (\Exception $e) {
             Log::error('Error: ' . json_encode($e));
             $this->batchService->changeStatus($this->data['id_batch'], 'X');
