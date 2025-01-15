@@ -49,10 +49,10 @@ Route::group(['prefix' => 'home', 'middleware' => 'auth'], function () {
             Route::get('/create', [UserController::class, 'create'])->name('home.users.create');
             Route::post('/store', [UserController::class, 'store'])->name('home.users.store');
             Route::get('/edit/{id}', [UserController::class, 'edit'])->name('home.users.edit');
-            Route::put('/update/{id}', [UserController::class, 'update'])->name('home.users.update');
             Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('home.users.delete');
         });
         
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('home.users.update');
         Route::get('/profile', [UserController::class, 'profile'])->name('home.users.profile');
     });
 });

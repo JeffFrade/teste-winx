@@ -50,7 +50,7 @@
                                         <td style="width: 1%" nowrap="nowrap">
                                             <a href="{{ route('home.users.edit', ['id' => $user->id]) }}" class="btn btn-default btn-xs" title="Editar"><i class="fa fa-fw fa-edit"></i></a>
                                             &nbsp;
-                                            <a href="#" class="btn btn-danger btn-xs btn-overlay" data-id="{{ $user->id }}" title="Excluir" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-fw fa-ban"></i></a>
+                                            <a href="#" class="btn btn-danger btn-xs btn-overlay {{ ($user->id == \Illuminate\Support\Facades\Auth::user()->id) ? 'disabled' : '' }}" data-id="{{ $user->id }}" title="Excluir" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-fw fa-ban"></i></a>
                                         </td>
                                     </tr>
                                 @empty

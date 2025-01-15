@@ -9,14 +9,12 @@
         </div>
     </div>
 
-    @can('admin')
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="email"><span class="required">*</span> E-mail:</label>
-                <input type="text" id="email" name="email" class="form-control" placeholder="E-mail" value="{{ old('email', $user->email ?? '') }}">
-            </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="email"><span class="required">*</span> E-mail:</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="E-mail" value="{{ old('email', $user->email ?? '') }}">
         </div>
-    @endcan
+    </div>
 
     <div class="col-md-4">
         <div class="form-group">
