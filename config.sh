@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "##### Inicializa os Containers ######"
-docker-compose up -d --build
+docker compose up -d --build
 
 echo "##### Copia o .env #####"
 docker exec jefffrade-teste-winx-php-fpm cp .env.example .env
