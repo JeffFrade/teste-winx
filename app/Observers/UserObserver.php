@@ -4,11 +4,27 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Repositories\BatchRepository;
+use App\Repositories\UserRepository;
+use Laravel\Passport\ClientRepository;
 
 class UserObserver
 {
+    public function created(User $user)
+    {
+        $client = app(ClientRepository::class)->create($user->id, 'J3M', env('APP_URL'), 'users', 1, 1);
+        $this->addClient($user->id, $client->id, $client->secret);
+    }
+
     public function deleting(User $user)
     {
         app(BatchRepository::class)->customDelete('id_user', $user->id);
+    }
+
+    private function addClient(int $idUser, string $id, string $secret)
+    {
+        app(UserRepository::class)->update([
+            'client_id' => $id,
+            'client_secret' => $secret
+        ], $idUser);
     }
 }

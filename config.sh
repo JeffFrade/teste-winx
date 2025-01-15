@@ -18,5 +18,8 @@ docker exec jefffrade-teste-winx-php-fpm php artisan key:generate
 echo "##### Cria as Tabelas e Popula o Banco de Dados #####"
 docker exec jefffrade-teste-winx-php-fpm php artisan migrate:fresh --seed
 
+echo "##### Gera as chaves do passport em storage/app/public/passport-keys.txt #####"
+docker exec jefffrade-teste-winx-php-fpm php artisan passport:keys
+
 echo "##### Limpa os logs antigos #####"
 docker exec jefffrade-teste-winx-php-fpm rm -rf storage/logs/laravel-*
