@@ -20,12 +20,18 @@ class CollaboratorService
         $this->batchService = new BatchService();
     }
 
-    public function index(array $data)
+    public function index(array $data, bool $isApi = false)
     {
         $search = $data['search'] ?? null;
         $idCompany = Auth::user()->id_company;
 
-        return $this->collaboratorRepository->index($idCompany, $search);
+        $collaborators = $this->collaboratorRepository->index($idCompany, $search);
+
+        if ($isApi && $collaborators->count() == 0) {
+            throw new CollaboratorNotFoundException('Não há dados para os filtros informados', 404);
+        }
+
+        return $collaborators;
     }
 
     public function store(array $data)

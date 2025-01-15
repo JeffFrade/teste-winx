@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "10b039cc-4427-48eb-ad33-211ac001920e",
+		"name": "Winx",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin@mail.com\",\n\t\"password\": \"123\",\n\t\"grant_type\": \"password\",\n\t\"client_id\": \"9df89c4f-746b-498a-b54a-67f8b9ef6f8c\",\n\t\"client_secret\": \"fAfzbOtLTB3fuPiY7xxAIGoGTcoJLYXk7fd1mMez\",\n\t\"scope\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/oauth/token",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Colaboradores",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5ZGY4OWM0Zi03NDZiLTQ5OGEtYjU0YS02N2Y4YjllZjZmOGMiLCJqdGkiOiJmMTQ3MjRmYmNkZTY2ZjRmMWFiN2Q3M2M1MjczNjk3NzQ0OTEzMWQ4NWUzOWI3YjQ3YjBiNzlhZTIxM2RlOTBiNjc4MDE0ZWZhN2UwYTVjZCIsImlhdCI6MTczNjkxMTAzMy4xNzM2OTYsIm5iZiI6MTczNjkxMTAzMy4xNzM3MDMsImV4cCI6MTczODIwNzAzMy4wOTg3OTEsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.n4d2Ix9bVE3l8T36TlDHFhBFPFleifV5UogvzvKeipP1RJYplAtAWDJytOPOf8eKB1O_0Jyk8vGH7UvZI7QUUHUlkCu2FB9YcNz6-d8rTrGR1Ks_jHZABRX4HnQ8Dd7sWiFOejYoD3UxHg5Yz6JjqC9YJfFciR2r6ZvZtVeRzU63wlJDZO9oF-1H8mCf2T3W4SD3TiqpsyaJLLaV0ekbWpoVKJDv6TAOoo4m7Dhlb7U8o3GEJv4XwZkXInlDTM_lVPUZ8qGI7eL9LVC1Oz778fKpidequmOf-noNxGHVesGXHSQJwYFz5RHyp8b0Fh1cZfhvypSPsBQBOq-ZGZZQjzOUNic2BOtzbxHwHExXmXWL6KpOI9c-4zGwz80cNyQKzmn_YBlWbXcpekUlxrC_fB8LUFV9KURjAmfAoCfHDosCeygWrUStULJPiLFtqGcJ0I_ZyTLuEql-6PxwbPjQV05M9kUXofY83vHPMJlB27eTvmi1qnmua9W9859zII2HaLnZJdKi_0XPzEeoXr5YtMCENxGonKE0mU205A0-BOAfWEWhXvJyRGkusf0PSyrvfifcEv4h6BtcOXHANRHa2vkbgHZE5tbIVCUqMYPMP4bTDcmBEiyRMDNRHejfUJgjPpfNoS44c-N88BzbEv3fDT01-9cvlmE5olgno977MHM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/collaborators?search=e&page=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"collaborators"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "e"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Colaborador",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5ZGY4OWM0Zi03NDZiLTQ5OGEtYjU0YS02N2Y4YjllZjZmOGMiLCJqdGkiOiJmMTQ3MjRmYmNkZTY2ZjRmMWFiN2Q3M2M1MjczNjk3NzQ0OTEzMWQ4NWUzOWI3YjQ3YjBiNzlhZTIxM2RlOTBiNjc4MDE0ZWZhN2UwYTVjZCIsImlhdCI6MTczNjkxMTAzMy4xNzM2OTYsIm5iZiI6MTczNjkxMTAzMy4xNzM3MDMsImV4cCI6MTczODIwNzAzMy4wOTg3OTEsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.n4d2Ix9bVE3l8T36TlDHFhBFPFleifV5UogvzvKeipP1RJYplAtAWDJytOPOf8eKB1O_0Jyk8vGH7UvZI7QUUHUlkCu2FB9YcNz6-d8rTrGR1Ks_jHZABRX4HnQ8Dd7sWiFOejYoD3UxHg5Yz6JjqC9YJfFciR2r6ZvZtVeRzU63wlJDZO9oF-1H8mCf2T3W4SD3TiqpsyaJLLaV0ekbWpoVKJDv6TAOoo4m7Dhlb7U8o3GEJv4XwZkXInlDTM_lVPUZ8qGI7eL9LVC1Oz778fKpidequmOf-noNxGHVesGXHSQJwYFz5RHyp8b0Fh1cZfhvypSPsBQBOq-ZGZZQjzOUNic2BOtzbxHwHExXmXWL6KpOI9c-4zGwz80cNyQKzmn_YBlWbXcpekUlxrC_fB8LUFV9KURjAmfAoCfHDosCeygWrUStULJPiLFtqGcJ0I_ZyTLuEql-6PxwbPjQV05M9kUXofY83vHPMJlB27eTvmi1qnmua9W9859zII2HaLnZJdKi_0XPzEeoXr5YtMCENxGonKE0mU205A0-BOAfWEWhXvJyRGkusf0PSyrvfifcEv4h6BtcOXHANRHa2vkbgHZE5tbIVCUqMYPMP4bTDcmBEiyRMDNRHejfUJgjPpfNoS44c-N88BzbEv3fDT01-9cvlmE5olgno977MHM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/collaborators/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"collaborators",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

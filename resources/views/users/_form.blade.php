@@ -36,4 +36,22 @@
             </div>
         </div>
     @endcan
+
+    @if(!empty($user->client_id))
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="client_id">Client ID:</label>
+                <input type="text" id="client_id" name="client_id" class="form-control" disabled="disabled" placeholder="Client ID" value="{{ $user->client_id }}">
+            </div>
+        </div>
+    @endif
+
+    @if(!empty($user->client_secret))
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="client_id">Client Secret:</label>
+                <input type="text" id="client_secret" name="client_secret" class="form-control" disabled="disabled" placeholder="Client Secret" value="{{ $user->client_secret }}">
+            </div>
+        </div>
+    @endif
 </div>
